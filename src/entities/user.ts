@@ -25,6 +25,10 @@ export class User {
     return this.props.phone;
   }
 
+  get password() {
+    return this.props.password;
+  }
+
   constructor(props: UserProps) {
 
     if (props.password.length < 6) {
