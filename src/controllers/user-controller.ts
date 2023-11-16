@@ -4,6 +4,7 @@ import { DbUserRepository } from '../repositories/db-user-repository';
 import { CreateUser } from '../use-cases/users/create-user';
 import { randomUUID } from 'node:crypto';
 import { LoginUser, LoginUserRequest } from '../use-cases/users/login-user';
+import { GetUserById } from '../use-cases/users/get-user-by-id';
 
 export class UserController {
 
@@ -48,8 +49,26 @@ export class UserController {
       return;
     }
 
-    response.status(201).json(result.value);
+    response.status(200).json(result.value);
     return;
-
   }
+
+  static async getUserById(request: Request, response: Response) {
+
+    const id = request.params.id;
+
+    const repository = new DbUserRepository();
+    const getUserById = new GetUserById(repository);
+
+    const result = await getUserById.execute(id);
+
+    if (result.isLeft()) {
+      response.status(result.value.statusCode).json(result.value.message);
+      return;
+    }
+
+    response.status(200).json(result.value);
+    return;
+  }
+
 }

@@ -8,5 +8,6 @@ const router = Router();
 
 router.post('/register', validationMiddleware(createUserValidationSchema), UserController.register);
 router.post('/login', validationMiddleware(LoginUserValidationSchema), UserController.login);
+router.get('/:id', UserController.getUserById);
 
 export default router;
