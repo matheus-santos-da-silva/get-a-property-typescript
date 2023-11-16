@@ -1,5 +1,5 @@
-import { User } from '../../entities/user';
-import { LoginUserRequest, LoginUserResponse } from '../../use-cases/login-user';
+import { User, UserProps } from '../../entities/user';
+import { LoginUserRequest } from '../../use-cases/users/login-user';
 import { UsersRepository } from '../users-repository';
 
 export class InMemoryUsersRepository implements UsersRepository {
@@ -10,24 +10,20 @@ export class InMemoryUsersRepository implements UsersRepository {
     this.items.push(user);
   }
 
-  async findEmailConflicts(email: string): Promise<User | null> {
+  async findUserByEmail(email: string): Promise<User | null> {
     const userWithEmailConflict = this.items.find((items) => items.email === email);
 
     if (!userWithEmailConflict) return null;
     return userWithEmailConflict;
   }
 
-  async login({ email, password }: LoginUserRequest): Promise<LoginUserResponse> {
+  async login({ email, password }: LoginUserRequest): Promise<UserProps | null> {
 
     const user = this.items.find((items) => items.email === email && items.password === password);
     if (!user) {
-      throw new Error('User not found');
+      return null;
     }
 
-    return {
-      message: 'User logged successfully',
-      token: 'test',
-      userId: user.id
-    };
+    return user;
   }
 }
