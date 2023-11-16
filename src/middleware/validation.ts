@@ -1,26 +1,25 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserRequest } from '../DTO/user-dtos';
-import { createUserValidationSchema } from '../utils/validation-schemas';
 import { z } from 'zod';
 
-export const validationRegisterMiddleware = (
-  request: Request<{}, {}, CreateUserRequest>,
-  response: Response,
-  next: NextFunction) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SchemaType<T> = z.ZodType<T, any, any>;
 
-  try {
+export const validationMiddleware = <T>(
 
-    const data = request.body;
-    createUserValidationSchema.parse(data);
+  schema: SchemaType<T>
+) => {
+  return (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const data: T = request.body;
+      schema.parse(data);
 
-    next();
-
-  } catch (error) {
-
-    if (error instanceof z.ZodError) {
-      response.status(400).json(error.errors.map((error) => error.message));
-      return;
+      next();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        response.status(400).json(error.errors.map((error) => error.message));
+        return;
+      }
     }
-  }
+  };
 };
