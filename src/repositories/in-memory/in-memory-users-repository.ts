@@ -32,4 +32,8 @@ export class InMemoryUsersRepository implements UsersRepository {
 
     return user;
   }
+
+  async getAllUsers(): Promise<UserProps[]> {
+    return this.items;
+  }
 }
