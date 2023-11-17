@@ -1,8 +1,21 @@
 import { User } from '@prisma/client';
-import * as jwt from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 
-export const createUserToken = (user: Omit<User, 'created_at'>): string => {
+interface CreateUserTokenResponse {
+  token: string
+  userId: string
+}
 
-  return jwt.sign({ name: user.name, id: user.id }, String(process.env.JWT_SECRET), { expiresIn: '24h' });
+export const createUserToken = (user: Omit<User, 'created_at'>): CreateUserTokenResponse => {
+
+  const token = sign({
+    name: user.name,
+    id: user.id
+  }, String(process.env.JWT_SECRET), { expiresIn: '24h' });
+
+  return {
+    token: token,
+    userId: user.id
+  };
 
 };

@@ -39,11 +39,11 @@ export class LoginUser {
       return left(new RequiredParametersError('Wrong password', 401));
     }
 
-    const token = createUserToken(user);
+    const { token } = createUserToken(user);
 
     return right({
       message: 'You are logged!',
-      token: token,
+      token,
       userId: user.id
     });
   }
