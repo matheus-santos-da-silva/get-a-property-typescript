@@ -20,9 +20,15 @@ export class InMemoryUsersRepository implements UsersRepository {
   async login({ email, password }: LoginUserRequest): Promise<UserProps | null> {
 
     const user = this.items.find((items) => items.email === email && items.password === password);
-    if (!user) {
-      return null;
-    }
+    if (!user) return null;
+
+    return user;
+  }
+
+  async findUserById(id: string): Promise<UserProps | null> {
+
+    const user = this.items.find((items) => items.id === id);
+    if (!user) return null;
 
     return user;
   }
