@@ -2,7 +2,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { z } from 'zod';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SchemaType<T> = z.ZodType<T, any, any>;
 
 export const validationMiddleware = <T>(
