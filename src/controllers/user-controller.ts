@@ -5,6 +5,7 @@ import { CreateUser } from '../use-cases/users/create-user';
 import { randomUUID } from 'node:crypto';
 import { LoginUser, LoginUserRequest } from '../use-cases/users/login-user';
 import { GetUserById } from '../use-cases/users/get-user-by-id';
+import { GetAllUsers } from '../use-cases/users/get-all-users';
 
 export class UserController {
 
@@ -69,6 +70,16 @@ export class UserController {
 
     response.status(200).json(result.value);
     return;
+  }
+
+  static async getAllUsers(request: Request, response: Response) {
+
+    const repository = new DbUserRepository();
+    const getAllUsers = new GetAllUsers(repository);
+
+    const result = await getAllUsers.execute();
+
+    response.status(200).json(result.value);
   }
 
 }

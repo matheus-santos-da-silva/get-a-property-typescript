@@ -46,6 +46,7 @@ export class DbUserRepository implements UsersRepository {
         name: true,
         email: true,
         phone: true,
+        Property: true
       }
     });
 
@@ -54,4 +55,18 @@ export class DbUserRepository implements UsersRepository {
     return user;
   }
 
+  async getAllUsers(): Promise<Omit<UserProps, 'password'>[]> {
+
+    const users = await prismaClient.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        phone: true,
+        Property: true,
+        created_at: true,
+      }
+    });
+    return users;
+  }
 }
