@@ -1,4 +1,5 @@
 import { User, UserProps } from '../entities/user';
+import { EditUserRequest } from '../use-cases/users/edit-user';
 import { GetUserByIdResponse } from '../use-cases/users/get-user-by-id';
 
 export interface UsersRepository {
@@ -6,4 +7,5 @@ export interface UsersRepository {
   findUserByEmail(email: string): Promise<UserProps | null>
   findUserById(id: string): Promise<GetUserByIdResponse | null>
   getAllUsers(): Promise<Omit<UserProps, 'password'>[]>
+  editUser(id: string, props: EditUserRequest): Promise<void>
 }

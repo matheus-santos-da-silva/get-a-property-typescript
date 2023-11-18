@@ -1,5 +1,6 @@
 import { prismaClient } from '../database/prisma-client';
 import { User, UserProps } from '../entities/user';
+import { EditUserRequest } from '../use-cases/users/edit-user';
 import { GetUserByIdResponse } from '../use-cases/users/get-user-by-id';
 import { encryptingPass } from '../utils/encrypt-password';
 import { UsersRepository } from './users-repository';
@@ -68,5 +69,20 @@ export class DbUserRepository implements UsersRepository {
       }
     });
     return users;
+  }
+
+  async editUser(id: string, props: EditUserRequest): Promise<void> {
+
+    const { name, email, phone, password } = props;
+
+    await prismaClient.user.update({
+      where: { id },
+      data: {
+        name,
+        email,
+        phone,
+        password
+      }
+    });
   }
 }
