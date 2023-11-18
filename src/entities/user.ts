@@ -29,12 +29,23 @@ export class User {
     return this.props.password;
   }
 
+  set name(value: string) {
+    this.props.name = value;
+  }
+
+  set phone(value: string) {
+    this.props.phone = value;
+  }
+
+  set email(value: string) {
+    this.props.email = value;
+  }
+
+  set password(value: string) {
+    this.props.password = value;
+  }
+
   constructor(props: UserProps) {
-
-    if (props.password.length < 6) {
-      throw new Error('The password need more than five characters');
-    }
-
     this.props = props;
   }
 }
