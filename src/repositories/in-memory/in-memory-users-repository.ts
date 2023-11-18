@@ -1,4 +1,5 @@
 import { User, UserProps } from '../../entities/user';
+import { EditUserRequest } from '../../use-cases/users/edit-user';
 import { LoginUserRequest } from '../../use-cases/users/login-user';
 import { UsersRepository } from '../users-repository';
 
@@ -35,5 +36,14 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async getAllUsers(): Promise<UserProps[]> {
     return this.items;
+  }
+
+  async editUser(id: string, props: EditUserRequest): Promise<void> {
+
+    for (const user of this.items) {
+      if (user.id === id) {
+        Object.assign(user, props);
+      }
+    }
   }
 }
