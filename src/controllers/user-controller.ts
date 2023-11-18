@@ -6,6 +6,7 @@ import { randomUUID } from 'node:crypto';
 import { LoginUser, LoginUserRequest } from '../use-cases/users/login-user';
 import { GetUserById } from '../use-cases/users/get-user-by-id';
 import { GetAllUsers } from '../use-cases/users/get-all-users';
+import { EditUser, EditUserRequest } from '../use-cases/users/edit-user';
 
 export class UserController {
 
@@ -80,6 +81,31 @@ export class UserController {
     const result = await getAllUsers.execute();
 
     response.status(200).json(result.value);
+  }
+
+  static async editUser(request: Request<{ id: string }, {}, EditUserRequest>, response: Response) {
+
+    const { email, name, phone, password } = request.body;
+    const id = request.params.id;
+
+    const repository = new DbUserRepository();
+    const editUser = new EditUser(repository);
+
+    const result = await editUser.execute(id, {
+      email,
+      name,
+      phone,
+      password
+    });
+
+    if (result.isLeft()) {
+      response.status(result.value.statusCode).json(result.value.message);
+      return;
+    }
+
+    response.status(200).json(result.value);
+    return;
+
   }
 
 }
