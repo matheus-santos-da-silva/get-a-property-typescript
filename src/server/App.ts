@@ -1,5 +1,6 @@
 import express from 'express';
 import UserRoutes from '../routes/user-routes';
+import PropertyRoutes from '../routes/property-routes';
 
 class App {
   public express: express.Application;
@@ -16,6 +17,7 @@ class App {
 
   private routes(): void {
     this.express.use('/users', UserRoutes);
+    this.express.use('/properties', PropertyRoutes);
   }
 }
 
