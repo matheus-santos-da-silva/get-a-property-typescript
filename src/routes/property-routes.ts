@@ -6,5 +6,6 @@ import { imageUpload } from '../middleware/upload-images';
 const router = Router();
 
 router.post('/create', verifyToken, imageUpload.array('images'), PropertyController.create);
+router.get('/', PropertyController.getAllProperties);
 
 export default router;

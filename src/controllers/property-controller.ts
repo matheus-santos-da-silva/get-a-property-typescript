@@ -6,6 +6,7 @@ import { DbUserRepository } from '../repositories/db-user-repository';
 import { getToken } from '../utils/get-token';
 import { left } from '../errors/either';
 import { RequiredParametersError } from '../errors/required-parameters-error';
+import { GetAllProperties } from '../use-cases/properties/get-all-properties';
 
 export class PropertyController {
 
@@ -56,6 +57,22 @@ export class PropertyController {
     }
 
     response.status(201).json({ message: 'Property created successfully' });
+    return;
+  }
+
+  static async getAllProperties(request: Request, response: Response) {
+
+    const repository = new DbPropertyRepository();
+    const getAllProperties = new GetAllProperties(repository);
+
+    const result = await getAllProperties.execute();
+
+    if (result.isLeft()) {
+      response.status(result.value.statusCode).json(result.value.message);
+      return;
+    }
+
+    response.status(201).json(result.value);
     return;
   }
 

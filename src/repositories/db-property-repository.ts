@@ -1,3 +1,4 @@
+import { getAllUsersProps } from '../DTO/property-dtos';
 import { prismaClient } from '../database/prisma-client';
 import { Property } from '../entities/property';
 import { PropertiesRepository } from './properties-repository';
@@ -30,6 +31,11 @@ export class DbPropertyRepository implements PropertiesRepository {
         user
       }
     });
+  }
+
+  async getAllProperties(): Promise<getAllUsersProps[]> {
+    const properties = await prismaClient.property.findMany({});
+    return properties;
   }
 
 }
