@@ -1,9 +1,11 @@
+import { Decimal } from '@prisma/client/runtime/library';
+
 interface PropertyProps {
   id: string
   category: string
   title: string
   address: string
-  price: number
+  price: Decimal
   description: string
   images?: string[]
   contractor?: string[]
@@ -56,7 +58,7 @@ export class Property {
   set address(value: string) {
     this.props.address = value;
   }
-  set price(value: number) {
+  set price(value: Decimal) {
     this.props.price = value;
   }
   set description(value: string) {

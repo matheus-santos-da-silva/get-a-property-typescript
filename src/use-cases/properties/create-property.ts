@@ -2,13 +2,14 @@ import { Either, left, right } from '../../errors/either';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
 import { PropertiesRepository } from '../../repositories/properties-repository';
 import { Property } from '../../entities/property';
+import { Decimal } from '@prisma/client/runtime/library';
 
 export interface CreatePropertyRequest {
   id: string
   category: string
   title: string
   address: string
-  price: number
+  price: Decimal
   description: string
   images: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] }
   available: boolean,
