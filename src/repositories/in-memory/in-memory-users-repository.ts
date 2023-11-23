@@ -46,4 +46,9 @@ export class InMemoryUsersRepository implements UsersRepository {
       }
     }
   }
+
+  async getUserByToken(token: string): Promise<UserProps | null> {
+    const t = token;
+    return null;
+  }
 }

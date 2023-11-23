@@ -8,4 +8,5 @@ export interface UsersRepository {
   findUserById(id: string): Promise<GetUserByIdResponse | null>
   getAllUsers(): Promise<Omit<UserProps, 'password'>[]>
   editUser(id: string, props: EditUserRequest): Promise<void>
+  getUserByToken(token: string): Promise<UserProps | null>
 }
