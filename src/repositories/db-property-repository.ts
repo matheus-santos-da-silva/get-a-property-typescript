@@ -1,4 +1,4 @@
-import { getAllUsersProps } from '../DTO/property-dtos';
+import { getAllPropertiesProps } from '../DTO/property-dtos';
 import { prismaClient } from '../database/prisma-client';
 import { Property } from '../entities/property';
 import { PropertiesRepository } from './properties-repository';
@@ -33,9 +33,28 @@ export class DbPropertyRepository implements PropertiesRepository {
     });
   }
 
-  async getAllProperties(): Promise<getAllUsersProps[]> {
+  async getAllProperties(): Promise<getAllPropertiesProps[]> {
     const properties = await prismaClient.property.findMany({});
     return properties;
+  }
+
+  async getUserProperties(id: string): Promise<getAllPropertiesProps[]> {
+
+    const userProperties = (await prismaClient.property.findMany({
+      where: { id_user: id }, select: {
+        title: true,
+        address: true,
+        category: true,
+        available: true,
+        description: true,
+        price: true,
+        images: true,
+        id: true,
+        contractor: true
+      }
+    }));
+
+    return userProperties;
   }
 
 }
