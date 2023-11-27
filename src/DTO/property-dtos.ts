@@ -1,6 +1,6 @@
 import { Decimal } from '@prisma/client/runtime/library';
 
-export interface getAllPropertiesProps {
+export interface PropertyProps {
   id: string;
   category: string;
   title: string;
