@@ -8,6 +8,7 @@ import { left } from '../errors/either';
 import { RequiredParametersError } from '../errors/required-parameters-error';
 import { GetAllProperties } from '../use-cases/properties/get-all-properties';
 import { GetUserProperties } from '../use-cases/properties/get-user-properties';
+import { GetPropertyById } from '../use-cases/properties/get-property-by-id';
 
 export class PropertyController {
 
@@ -86,6 +87,24 @@ export class PropertyController {
     const getUserProperties = new GetUserProperties(propertyRepository, userProperty);
 
     const result = await getUserProperties.execute(id);
+
+    if (result.isLeft()) {
+      response.status(result.value.statusCode).json(result.value.message);
+      return;
+    }
+
+    response.status(200).json(result.value);
+    return;
+  }
+
+  static async GetPropertyById(request: Request, response: Response) {
+
+    const id = request.params.id;
+
+    const respository = new DbPropertyRepository();
+    const getPropertyById = new GetPropertyById(respository);
+
+    const result = await getPropertyById.execute(id);
 
     if (result.isLeft()) {
       response.status(result.value.statusCode).json(result.value.message);

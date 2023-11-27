@@ -1,4 +1,4 @@
-import { getAllPropertiesProps } from '../DTO/property-dtos';
+import { PropertyProps } from '../DTO/property-dtos';
 import { prismaClient } from '../database/prisma-client';
 import { Property } from '../entities/property';
 import { PropertiesRepository } from './properties-repository';
@@ -33,12 +33,12 @@ export class DbPropertyRepository implements PropertiesRepository {
     });
   }
 
-  async getAllProperties(): Promise<getAllPropertiesProps[]> {
+  async getAllProperties(): Promise<PropertyProps[]> {
     const properties = await prismaClient.property.findMany({});
     return properties;
   }
 
-  async getUserProperties(id: string): Promise<getAllPropertiesProps[]> {
+  async getUserProperties(id: string): Promise<PropertyProps[]> {
 
     const userProperties = (await prismaClient.property.findMany({
       where: { id_user: id }, select: {
@@ -55,6 +55,14 @@ export class DbPropertyRepository implements PropertiesRepository {
     }));
 
     return userProperties;
+  }
+
+  async getPropertyById(id: string): Promise<PropertyProps | null> {
+
+    const property = await prismaClient.property.findUnique({ where: { id } });
+
+    if (!property) return null;
+    return property;
   }
 
 }

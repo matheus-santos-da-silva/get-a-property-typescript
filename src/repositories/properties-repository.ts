@@ -1,8 +1,9 @@
-import { getAllPropertiesProps } from '../DTO/property-dtos';
+import { PropertyProps } from '../DTO/property-dtos';
 import { Property } from '../entities/property';
 
 export interface PropertiesRepository {
   create(props: Property): Promise<void>
-  getAllProperties(): Promise<getAllPropertiesProps[]>
-  getUserProperties(id: string): Promise<getAllPropertiesProps[]>
+  getAllProperties(): Promise<PropertyProps[]>
+  getUserProperties(id: string): Promise<PropertyProps[]>
+  getPropertyById(id: string): Promise<PropertyProps | null>
 }

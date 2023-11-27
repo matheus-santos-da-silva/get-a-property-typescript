@@ -17,5 +17,6 @@ router.post(
 
 router.get('/', PropertyController.getAllProperties);
 router.get('/myproperties/:id', verifyToken, PropertyController.getUserProperties);
+router.get('/:id', PropertyController.GetPropertyById);
 
 export default router;
