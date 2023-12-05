@@ -1,4 +1,5 @@
 import { Decimal } from '@prisma/client/runtime/library';
+import { Contractor } from './contractor';
 
 interface PropertyProps {
   id: string
@@ -8,9 +9,11 @@ interface PropertyProps {
   price: Decimal
   description: string
   images?: string[]
-  contractor?: string[]
+  contractor?: Contractor
   available: boolean
+  contractorId: string | null
   user: { connect: { id: string } };
+  id_user: string
 }
 
 export class Property {
@@ -48,6 +51,9 @@ export class Property {
     return this.props.user;
   }
 
+  get id_user() {
+    return this.props.id_user;
+  }
 
   set category(value: string) {
     this.props.category = value;
@@ -72,6 +78,17 @@ export class Property {
   }
   set user(value: { connect: { id: string } }) {
     this.props.user = value;
+  }
+  set contractor(value: Contractor | undefined) {
+    this.props.contractor = value;
+  }
+
+  set contractorId(value: string) {
+    this.props.contractorId = value;
+  }
+
+  set id_user(value: string) {
+    this.props.id_user = value;
   }
 
   constructor(props: PropertyProps) {
