@@ -1,4 +1,4 @@
-import { PropertyProps } from '../DTO/property-dtos';
+import { PropertyProps, ScheduleRepositoryRequestProps } from '../DTO/property-dtos';
 import { Property } from '../entities/property';
 
 export interface PropertiesRepository {
@@ -6,4 +6,6 @@ export interface PropertiesRepository {
   getAllProperties(): Promise<PropertyProps[]>
   getUserProperties(id: string): Promise<PropertyProps[]>
   getPropertyById(id: string): Promise<PropertyProps | null>
+  getUserNegotiations(id: string): Promise<PropertyProps[]>
+  schedule(props: ScheduleRepositoryRequestProps): Promise<string>
 }
