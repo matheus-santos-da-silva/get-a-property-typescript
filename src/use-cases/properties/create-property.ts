@@ -69,7 +69,9 @@ export class CreateProperty {
       title,
       description,
       images: arrayImages,
-      user
+      user,
+      contractorId: null,
+      id_user: user.connect.id
     });
 
     await this.repository.create(newProperty);
