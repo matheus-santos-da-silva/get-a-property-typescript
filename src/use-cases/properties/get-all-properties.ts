@@ -1,9 +1,9 @@
-import { getAllPropertiesProps } from '../../DTO/property-dtos';
+import { PropertyProps } from '../../DTO/property-dtos';
 import { Either, right } from '../../errors/either';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
 import { PropertiesRepository } from '../../repositories/properties-repository';
 
-type GetAllPropertiesResponse = getAllPropertiesProps[]
+type GetAllPropertiesResponse = PropertyProps[]
 type Response = Either<RequiredParametersError, GetAllPropertiesResponse>
 
 export class GetAllProperties {

@@ -41,7 +41,6 @@ describe('Get All Properties', () => {
     await createProperty.execute(mockProperty2);
 
     const result = await getAllProperties.execute();
-    console.log(result.value);
 
     expect(result.value).toHaveLength(2);
     expect(result.value).toEqual(repository.items);
