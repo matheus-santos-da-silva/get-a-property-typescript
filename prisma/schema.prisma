@@ -11,30 +11,40 @@ datasource db {
 }
 
 model User {
-  id          String     @id   @default(uuid())
-  name        String
-  email       String     @unique
-  phone       String
-  password    String
-  Property    Property[]
-  created_at  DateTime   @default(now())
+  id         String     @id @default(uuid())
+  name       String
+  email      String     @unique
+  phone      String
+  password   String
+  Property   Property[]
+  created_at DateTime   @default(now())
 
   @@map("users")
 }
 
 model Property {
-  id          String    @id   @default(uuid())
-  category    String
-  title       String
-  address     String    @unique
-  price       Decimal    
-  description String
-  available   Boolean   @default(true)
-  contractor  String[]  @default([]) 
-  images      String[]  @default([])
-  created_at  DateTime  @default(now())
-  id_user     String 
-  user        User      @relation( fields: [id_user], references: [id] )
-  
+  id           String      @id @default(uuid())
+  category     String
+  title        String
+  address      String      @unique
+  price        Decimal
+  description  String
+  available    Boolean     @default(true)
+  contractor   Contractor? @relation(fields: [contractorId], references: [id])
+  images       String[]    @default([])
+  created_at   DateTime    @default(now())
+  id_user      String
+  user         User        @relation(fields: [id_user], references: [id])
+  contractorId String?
+
   @@map("properties")
+}
+
+model Contractor {
+  id       String     @id @default(uuid())
+  phone    String
+  name     String
+  Property Property[]
+
+  @@map("contractors")
 }
