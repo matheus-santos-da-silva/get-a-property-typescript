@@ -9,6 +9,9 @@ import { RequiredParametersError } from '../errors/required-parameters-error';
 import { GetAllProperties } from '../use-cases/properties/get-all-properties';
 import { GetUserProperties } from '../use-cases/properties/get-user-properties';
 import { GetPropertyById } from '../use-cases/properties/get-property-by-id';
+import { Schedule } from '../use-cases/properties/schedule';
+import { DbContractorRepository } from '../repositories/db-contractor-repository';
+
 
 export class PropertyController {
 
@@ -105,6 +108,38 @@ export class PropertyController {
     const getPropertyById = new GetPropertyById(respository);
 
     const result = await getPropertyById.execute(id);
+
+    if (result.isLeft()) {
+      response.status(result.value.statusCode).json(result.value.message);
+      return;
+    }
+
+    response.status(200).json(result.value);
+    return;
+  }
+
+  static async Schedule(request: Request, response: Response) {
+
+    const id = request.params.id;
+
+    const token = getToken(request);
+    if (!token) {
+      return left(new RequiredParametersError('Token not found', 400));
+    }
+
+    const userRepository = new DbUserRepository();
+
+    const user = await userRepository.getUserByToken(token);
+    if (!user) {
+      return left(new RequiredParametersError('User not found', 400));
+    }
+
+    const propertyRepository = new DbPropertyRepository();
+    const contractorRepository = new DbContractorRepository();
+
+    const schedule = new Schedule(propertyRepository, userRepository, contractorRepository);
+
+    const result = await schedule.execute({ propertyId: id, user });
 
     if (result.isLeft()) {
       response.status(result.value.statusCode).json(result.value.message);
