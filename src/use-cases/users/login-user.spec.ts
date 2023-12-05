@@ -1,8 +1,12 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { LoginUser } from './login-user';
 import { CreateUser } from './create-user';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
+
+vi.mock('bcrypt', () => ({
+  compare: vi.fn().mockReturnValue(true)
+}));
 
 describe('Login User', () => {
 
