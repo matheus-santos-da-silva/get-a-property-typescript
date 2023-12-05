@@ -34,7 +34,8 @@ export class LoginUser {
       return left(new RequiredParametersError('User not exists', 401));
     }
 
-    const checkPassword = compare(password, user.password);
+    const checkPassword = await compare(password, user.password);
+
     if (!checkPassword) {
       return left(new RequiredParametersError('Wrong password', 401));
     }
