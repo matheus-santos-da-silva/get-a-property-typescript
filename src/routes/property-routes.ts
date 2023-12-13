@@ -18,5 +18,6 @@ router.post(
 router.get('/', PropertyController.getAllProperties);
 router.get('/myproperties/:id', verifyToken, PropertyController.getUserProperties);
 router.get('/:id', PropertyController.GetPropertyById);
+router.patch('/schedule/:id', verifyToken, PropertyController.Schedule);
 
 export default router;

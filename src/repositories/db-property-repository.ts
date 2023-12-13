@@ -1,4 +1,4 @@
-import { PropertyProps } from '../DTO/property-dtos';
+import { PropertyProps, ScheduleRepositoryRequestProps } from '../DTO/property-dtos';
 import { prismaClient } from '../database/prisma-client';
 import { Property } from '../entities/property';
 import { PropertiesRepository } from './properties-repository';
@@ -9,7 +9,6 @@ export class DbPropertyRepository implements PropertiesRepository {
     address,
     available,
     category,
-    contractor,
     description,
     images,
     price,
@@ -23,7 +22,6 @@ export class DbPropertyRepository implements PropertiesRepository {
         address,
         available,
         category,
-        contractor,
         description,
         images,
         price,
@@ -50,7 +48,9 @@ export class DbPropertyRepository implements PropertiesRepository {
         price: true,
         images: true,
         id: true,
-        contractor: true
+        contractor: true,
+        id_user: true,
+        contractorId: true
       }
     }));
 
@@ -63,6 +63,21 @@ export class DbPropertyRepository implements PropertiesRepository {
 
     if (!property) return null;
     return property;
+  }
+
+  async getUserNegotiations(id: string): Promise<PropertyProps[]> {
+    const negotiations = await prismaClient.property.findMany({});
+    return negotiations;
+  }
+
+  async schedule({
+    contractor,
+    owner,
+    propertyId
+  }: ScheduleRepositoryRequestProps): Promise<string> {
+    
+    await prismaClient.property.update({ where: { id: propertyId }, data: { contractorId: contractor.id } });
+    return ` Visit scheduled with succefully, contact ${owner.name} and call to ${owner.phone} `;
   }
 
 }
