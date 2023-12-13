@@ -6,6 +6,7 @@ import { GetUserByIdResponse } from '../use-cases/users/get-user-by-id';
 import { encryptingPass } from '../utils/encrypt-password';
 import { UsersRepository } from './users-repository';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { GetAllUsersResponseDTO } from '../DTO/user-dtos';
 
 export class DbUserRepository implements UsersRepository {
 
@@ -58,7 +59,7 @@ export class DbUserRepository implements UsersRepository {
     return user;
   }
 
-  async getAllUsers(): Promise<Omit<UserProps, 'password'>[]> {
+  async getAllUsers(): Promise<GetAllUsersResponseDTO[]> {
 
     const users = await prismaClient.user.findMany({
       select: {
@@ -67,7 +68,6 @@ export class DbUserRepository implements UsersRepository {
         name: true,
         phone: true,
         Property: true,
-        created_at: true,
       }
     });
     return users;
