@@ -11,7 +11,7 @@ import { GetUserProperties } from '../use-cases/properties/get-user-properties';
 import { GetPropertyById } from '../use-cases/properties/get-property-by-id';
 import { Schedule } from '../use-cases/properties/schedule';
 import { DbContractorRepository } from '../repositories/db-contractor-repository';
-
+import { CreatePropertyValidation } from '../utils/create-property-validation';
 
 export class PropertyController {
 
@@ -26,6 +26,12 @@ export class PropertyController {
       title,
     } = request.body;
 
+    const validationRequest = CreatePropertyValidation(request);
+    if (!validationRequest.isValid) {
+      response.status(422).json({ message: validationRequest.message });
+      return;
+    }
+    
     let images = request.files;
     if (!images) images = [];
 
