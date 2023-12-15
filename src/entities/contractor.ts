@@ -1,7 +1,10 @@
+import { PropertyProps } from '../DTO/property-dtos';
+
 export interface ContractorProps {
   id: string
   name: string
   phone: string
+  property?: PropertyProps[]
 }
 
 export class Contractor {
@@ -20,12 +23,28 @@ export class Contractor {
     return this.props.phone;
   }
 
+  get property() {
+    return this.props.property;
+  }
+
   set name(value: string) {
     this.props.name = value;
   }
 
   set phone(value: string) {
     this.props.phone = value;
+  }
+
+  set property(values: PropertyProps[] | undefined) {
+    let properties: PropertyProps[] = [];
+
+    if(values) {
+      for (const value of values) {
+        properties.push(value);
+      }
+    }
+    
+    this.props.property = undefined;
   }
 
   constructor(props: ContractorProps) {
