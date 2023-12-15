@@ -77,7 +77,7 @@ export class DbPropertyRepository implements PropertiesRepository {
   }: ScheduleRepositoryRequestProps): Promise<string> {
     
     await prismaClient.property.update({ where: { id: propertyId }, data: { contractorId: contractor.id } });
-    return ` Visit scheduled with succefully, contact ${owner.name} and call to ${owner.phone} `;
+    return ` Visit scheduled succefully, contact ${owner.name} and call ${owner.phone} `;
   }
 
 }
