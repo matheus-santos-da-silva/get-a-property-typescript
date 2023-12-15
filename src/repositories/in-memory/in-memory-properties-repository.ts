@@ -1,6 +1,6 @@
 import { PropertiesRepository } from '../properties-repository';
 import { Property } from '../../entities/property';
-import { PropertyProps } from '../../DTO/property-dtos';
+import { PropertyProps, ScheduleRepositoryRequestProps } from '../../DTO/property-dtos';
 
 export class InMemoryPropertiesRepository implements PropertiesRepository {
 
@@ -26,6 +26,26 @@ export class InMemoryPropertiesRepository implements PropertiesRepository {
     if (!property) return null;
 
     return property;
+  }
+
+  async schedule({
+    contractor,
+    owner,
+    propertyId
+  }: ScheduleRepositoryRequestProps): Promise<string> {
+    
+    const property = this.items.find((item) => item.id === propertyId);
+    if(!property) {
+      return 'The property not exists';
+    }
+
+    property.contractorId = contractor.id;
+    return `Visit scheduled succefully, contact ${owner.name} and call ${owner.phone}`;
+
+  }
+
+  async getUserNegotiations(id: string): Promise<PropertyProps[]> {
+    throw new Error('');
   }
 
 }
