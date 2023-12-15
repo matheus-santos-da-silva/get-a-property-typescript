@@ -7,7 +7,7 @@ export interface UsersRepository {
   create(user: User): Promise<void>
   findUserByEmail(email: string): Promise<UserProps | null>
   findUserById(id: string): Promise<GetUserByIdResponse | null>
-  getAllUsers(): Promise<GetAllUsersResponseDTO[]>
+  getAllUsers(): Promise<GetAllUsersResponseDTO[] | UserProps[]>
   editUser(id: string, props: EditUserRequest): Promise<void>
   getUserByToken(token: string): Promise<UserProps | null>
 }
