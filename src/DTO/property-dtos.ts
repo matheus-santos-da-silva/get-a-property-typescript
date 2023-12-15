@@ -1,5 +1,6 @@
 import { Decimal } from '@prisma/client/runtime/library';
 import { ContractorProps } from './contractor.dtos';
+import { Contractor } from '../entities/contractor';
 
 export interface PropertyProps {
   id: string;
@@ -23,6 +24,6 @@ export interface Owner {
 
 export interface ScheduleRepositoryRequestProps {
   propertyId: string
-  contractor: ContractorProps,
+  contractor: ContractorProps | Contractor,
   owner: Owner
 }
