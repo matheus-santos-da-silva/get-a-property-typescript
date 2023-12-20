@@ -51,6 +51,10 @@ export class Property {
     return this.props.user;
   }
 
+  get contractorId() {
+    return this.props.contractorId;
+  }
+
   get id_user() {
     return this.props.id_user;
   }
@@ -83,7 +87,7 @@ export class Property {
     this.props.contractor = value;
   }
 
-  set contractorId(value: string) {
+  set contractorId(value: string | null) {
     this.props.contractorId = value;
   }
 
