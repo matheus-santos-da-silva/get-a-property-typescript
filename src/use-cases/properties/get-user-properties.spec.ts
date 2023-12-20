@@ -1,31 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { InMemoryPropertiesRepository } from '../../repositories/in-memory/in-memory-properties-repository';
 import { GetUserProperties } from './get-user-properties';
-import { Decimal } from '@prisma/client/runtime/library';
+import { mockUser, mockProperty } from '../../mocks/mocks';
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { CreateUser } from '../users/create-user';
 import { CreateProperty } from './create-property';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
-
-const mockUser = {
-  id: '222222222',
-  email: 'test@test.com',
-  name: 'test',
-  password: '123456',
-  phone: '111111111'
-};
-
-const mockProperty = {
-  id: '11111',
-  address: 'test 123',
-  category: 'test',
-  description: 'test',
-  images: [],
-  price: new Decimal(123),
-  available: true,
-  title: 'test',
-  user: { connect: { id: mockUser.id } }
-};
 
 describe('GetUserProperties', () => {
 

@@ -7,34 +7,7 @@ import { Schedule } from './schedule';
 import { CreateUser } from '../users/create-user';
 import { CreateProperty } from './create-property';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
-
-const mockUser = {
-  id: '222222222',
-  email: 'test@test.com',
-  name: 'test',
-  password: '123456',
-  phone: '111111111'
-};
-
-const mockUser1 = {
-  id: '3333333333',
-  email: 'test2@test.com',
-  name: 'test2',
-  password: '123456',
-  phone: '33333333333'
-};
-
-const mockProperty = {
-  id: '11111',
-  address: 'test 123',
-  category: 'test',
-  description: 'test',
-  images: [],
-  price: new Decimal(123),
-  available: true,
-  title: 'test',
-  user: { connect: { id: mockUser.id } }
-};
+import { mockProperty, mockUser, mockUser1 } from '../../mocks/mocks';
 
 describe('Schedule use case', () => {
     

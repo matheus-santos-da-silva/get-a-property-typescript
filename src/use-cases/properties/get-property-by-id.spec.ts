@@ -3,20 +3,8 @@ import { InMemoryPropertiesRepository } from '../../repositories/in-memory/in-me
 import { GetPropertyById } from './get-property-by-id';
 import { Property } from '../../entities/property';
 import { CreateProperty } from './create-property';
-import { Decimal } from '@prisma/client/runtime/library';
+import { mockProperty } from '../../mocks/mocks';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
-
-const mockProperty = {
-  id: '11111',
-  address: 'test 123',
-  category: 'test',
-  description: 'test',
-  images: [],
-  price: new Decimal(123),
-  available: true,
-  title: 'test',
-  user: { connect: { id: 'user_id' } }
-};
 
 describe('Get Property By Id', () => {
 
@@ -28,7 +16,7 @@ describe('Get Property By Id', () => {
 
     await createProperty.execute(mockProperty);
 
-    const result = await sut.execute('11111');
+    const result = await sut.execute('1');
 
     expect(result.value).toBeInstanceOf(Property);
 
@@ -42,7 +30,7 @@ describe('Get Property By Id', () => {
 
     await createProperty.execute(mockProperty);
 
-    const result = await sut.execute('0000000');
+    const result = await sut.execute('invalid id');
 
     expect(result.value).toBeInstanceOf(RequiredParametersError);
 
