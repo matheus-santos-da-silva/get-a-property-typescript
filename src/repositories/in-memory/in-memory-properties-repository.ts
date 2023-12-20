@@ -44,8 +44,9 @@ export class InMemoryPropertiesRepository implements PropertiesRepository {
 
   }
 
-  async getUserNegotiations(id: string): Promise<PropertyProps[]> {
-    throw new Error('');
+  async getMyNegotiations(contractorId: string): Promise<PropertyProps[]> {
+    const negotiations = this.items.filter((item) => item.contractorId === contractorId);
+    return negotiations;
   }
 
 }

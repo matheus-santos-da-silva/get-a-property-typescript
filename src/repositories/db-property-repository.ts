@@ -65,11 +65,6 @@ export class DbPropertyRepository implements PropertiesRepository {
     return property;
   }
 
-  async getUserNegotiations(id: string): Promise<PropertyProps[]> {
-    const negotiations = await prismaClient.property.findMany({});
-    return negotiations;
-  }
-
   async schedule({
     contractor,
     owner,
@@ -78,6 +73,11 @@ export class DbPropertyRepository implements PropertiesRepository {
     
     await prismaClient.property.update({ where: { id: propertyId }, data: { contractorId: contractor.id } });
     return ` Visit scheduled succefully, contact ${owner.name} and call ${owner.phone} `;
+  }
+
+  async getMyNegotiations(contractorId: string): Promise<PropertyProps[] | []> {
+    const negotiations = await prismaClient.property.findMany({ where: { contractorId } });
+    return negotiations;
   }
 
 }

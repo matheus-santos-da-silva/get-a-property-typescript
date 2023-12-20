@@ -1,12 +1,13 @@
 import { PropertyProps } from '../../DTO/property-dtos';
 import { Contractor, ContractorProps } from '../../entities/contractor';
 import { ContractorsRepository } from '../contractor-repository';
+import { InMemoryPropertiesRepository } from './in-memory-properties-repository';
 
-export class InMemoryContractorsRepository implements ContractorsRepository{
-    
+export class InMemoryContractorsRepository implements ContractorsRepository {
+
   items: Contractor[] = [];
 
-  async create( contractor: Contractor, property: PropertyProps): Promise<void> {
+  async create(contractor: Contractor, property: PropertyProps): Promise<void> {
     this.items.push(contractor);
   }
 
@@ -16,17 +17,17 @@ export class InMemoryContractorsRepository implements ContractorsRepository{
 
   async checkIfVisitAlreadyScheduled(contractorId: string, propertyId: string): Promise<Contractor | null> {
     const contractor = this.items.find((item) => item.id === contractorId);
-    if(!contractor) return null;
+    if (!contractor) return null;
 
     const alreadyExists = contractor.property?.some((property) => property.id === propertyId);
     if (alreadyExists) return null;
-  
+
     return contractor;
   }
-  
+
   async checkIfContractorExists(name: string, phone: string): Promise<Contractor | null> {
     const contractor = this.items.find((item) => item.name === name && item.phone === phone);
-    if(!contractor) return null;
+    if (!contractor) return null;
 
     return contractor;
   }

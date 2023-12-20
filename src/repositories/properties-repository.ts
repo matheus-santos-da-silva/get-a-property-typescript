@@ -6,6 +6,6 @@ export interface PropertiesRepository {
   getAllProperties(): Promise<PropertyProps[]>
   getUserProperties(id: string): Promise<PropertyProps[]>
   getPropertyById(id: string): Promise<PropertyProps | null>
-  getUserNegotiations(id: string): Promise<PropertyProps[]>
+  getMyNegotiations(contractorId: string): Promise<PropertyProps[]>
   schedule(props: ScheduleRepositoryRequestProps): Promise<string>
 }
