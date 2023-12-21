@@ -1,6 +1,5 @@
 import { Either, left, right } from '../../errors/either';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
-import { ContractorsRepository } from '../../repositories/contractor-repository';
 import { PropertiesRepository } from '../../repositories/properties-repository';
 import { UsersRepository } from '../../repositories/users-repository';
 
