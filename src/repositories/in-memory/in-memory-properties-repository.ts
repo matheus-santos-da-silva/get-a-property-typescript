@@ -49,4 +49,19 @@ export class InMemoryPropertiesRepository implements PropertiesRepository {
     return negotiations;
   }
 
+  async concludeNegotiation(propertyId: string): Promise<string> {
+    
+    const property = this.items.find((item) => item.id === propertyId);
+    if(!property) {
+      return 'The property not found';
+    }
+
+    for (const item of this.items) {
+      const index = this.items.findIndex((item) => item.id === propertyId);
+      this.items.splice(index, 1);
+    }
+
+    return 'Negotiation completed successfully';
+  }
+
 }
