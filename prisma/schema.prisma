@@ -29,7 +29,6 @@ model Property {
   address      String      @unique
   price        Decimal
   description  String
-  available    Boolean     @default(true)
   contractor   Contractor? @relation(fields: [contractorId], references: [id])
   images       String[]    @default([])
   created_at   DateTime    @default(now())

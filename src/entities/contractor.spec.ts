@@ -13,7 +13,6 @@ describe('Contractor entity', () => {
       title: 'test',
       price: new Decimal(10),
       address: 'test',
-      available: true,
       description: '',
       contractorId: null,
       id_user: 'id',

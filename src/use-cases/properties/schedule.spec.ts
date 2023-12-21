@@ -1,4 +1,3 @@
-import { Decimal } from '@prisma/client/runtime/library';
 import { describe, expect, it } from 'vitest';
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { InMemoryPropertiesRepository } from '../../repositories/in-memory/in-memory-properties-repository';

@@ -12,7 +12,6 @@ export interface CreatePropertyRequest {
   price: Decimal
   description: string
   images: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] }
-  available: boolean,
   user: { connect: { id: string } }
 }
 
@@ -30,7 +29,6 @@ export class CreateProperty {
     {
       id,
       address,
-      available,
       category,
       description,
       images,
@@ -38,16 +36,6 @@ export class CreateProperty {
       title,
       user
     }: CreatePropertyRequest): Promise<Response> {
-
-    if (available === false) {
-      return left(new RequiredParametersError(
-        'Is not possible to create a property if the available field is false',
-        400
-      ));
-    }
-
-    if (!description) description = '';
-    available = true;
 
     let arrayImages: string[] = [];
     if (!images) arrayImages = [];
@@ -63,7 +51,6 @@ export class CreateProperty {
     const newProperty = new Property({
       id,
       address,
-      available,
       category,
       price,
       title,

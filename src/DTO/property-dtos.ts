@@ -9,7 +9,6 @@ export interface PropertyProps {
   address: string;
   price: Decimal;
   description: string;
-  available: boolean;
   images?: string[];
   id_user: string
   contractorId: string | null

@@ -3,6 +3,7 @@ import { InMemoryPropertiesRepository } from '../../repositories/in-memory/in-me
 import { CreateProperty } from './create-property';
 import { Property } from '../../entities/property';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
+import { Decimal } from '@prisma/client/runtime/library';
 
 describe('Create Property', () => {
 
@@ -17,8 +18,7 @@ describe('Create Property', () => {
       category: 'test',
       description: 'test',
       images: [],
-      price: 123,
-      available: true,
+      price: new Decimal(123),
       title: 'test',
       user: { connect: { id: 'string' } }
     });
@@ -38,8 +38,7 @@ describe('Create Property', () => {
       category: 'test',
       description: 'test',
       images: [],
-      price: 123,
-      available: false,
+      price: new Decimal(123),
       title: 'test',
       user: { connect: { id: 'string' } }
     });

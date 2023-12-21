@@ -23,7 +23,6 @@ export const mockProperty = {
   description: 'test',
   images: [],
   price: new Decimal(123),
-  available: true,
   title: 'test',
   user: { connect: { id: mockUser.id } }
 };
@@ -35,7 +34,6 @@ export const mockProperty1 = {
   description: 'test',
   images: [],
   price: new Decimal(123),
-  available: true,
   title: 'test',
   user: { connect: { id: mockUser.id } }
 };

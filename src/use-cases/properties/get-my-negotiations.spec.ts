@@ -5,10 +5,9 @@ import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-
 import { InMemoryPropertiesRepository } from '../../repositories/in-memory/in-memory-properties-repository';
 import { CreateUser } from '../users/create-user';
 import { CreateProperty } from './create-property';
-import { mockProperty, mockProperty1, mockUser, mockUser1 } from '../../mocks/mocks';
+import { mockProperty1, mockUser, mockUser1 } from '../../mocks/mocks';
 import { Schedule } from './schedule';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
-
 
 describe('GetMyNegotiations use case', () => {
   
