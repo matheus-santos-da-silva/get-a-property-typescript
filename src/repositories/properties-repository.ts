@@ -8,4 +8,5 @@ export interface PropertiesRepository {
   getPropertyById(id: string): Promise<PropertyProps | null>
   getMyNegotiations(contractorId: string): Promise<PropertyProps[]>
   schedule(props: ScheduleRepositoryRequestProps): Promise<string>
+  concludeNegotiation(propertyId: string): Promise<string>
 }

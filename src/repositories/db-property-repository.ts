@@ -7,7 +7,6 @@ export class DbPropertyRepository implements PropertiesRepository {
   async create({
     id,
     address,
-    available,
     category,
     description,
     images,
@@ -20,7 +19,6 @@ export class DbPropertyRepository implements PropertiesRepository {
       data: {
         id,
         address,
-        available,
         category,
         description,
         images,
@@ -43,7 +41,6 @@ export class DbPropertyRepository implements PropertiesRepository {
         title: true,
         address: true,
         category: true,
-        available: true,
         description: true,
         price: true,
         images: true,
@@ -78,6 +75,12 @@ export class DbPropertyRepository implements PropertiesRepository {
   async getMyNegotiations(contractorId: string): Promise<PropertyProps[] | []> {
     const negotiations = await prismaClient.property.findMany({ where: { contractorId } });
     return negotiations;
+  }
+
+  async concludeNegotiation(propertyId: string): Promise<string> {
+    
+    await prismaClient.property.delete({ where: { id: propertyId } });
+    return 'Negotiation completed successfully';
   }
 
 }

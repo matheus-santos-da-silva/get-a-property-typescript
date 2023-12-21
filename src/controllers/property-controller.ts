@@ -13,6 +13,7 @@ import { Schedule } from '../use-cases/properties/schedule';
 import { DbContractorRepository } from '../repositories/db-contractor-repository';
 import { CreatePropertyValidation } from '../utils/create-property-validation';
 import { GetMyNegotiations } from '../use-cases/properties/get-my-negotiations';
+import { ConcludeNegotiation } from '../use-cases/properties/conclude-negotiation';
 
 export class PropertyController {
 
@@ -20,7 +21,6 @@ export class PropertyController {
 
     const {
       address,
-      available,
       category,
       description,
       price,
@@ -54,7 +54,6 @@ export class PropertyController {
       {
         id: randomUUID(),
         address,
-        available,
         category,
         description,
         price,
@@ -184,6 +183,40 @@ export class PropertyController {
 
     response.status(200).json(result.value);
     return;
+  }
+
+  static async ConcludeNegotiation(request: Request, response: Response) {
+
+    const id = request.params.id;
+
+    const token = getToken(request);
+    if (!token) {
+      return left(new RequiredParametersError('Token not found', 401));
+    }
+    
+    const propertyRepository = new DbPropertyRepository();
+
+    const userRepository = new DbUserRepository();
+    const user = await userRepository.getUserByToken(token);
+
+    if (!user) {
+      return left(new RequiredParametersError('User not found', 404));
+    }
+
+    const concludeNegotiation = new ConcludeNegotiation(propertyRepository, userRepository);
+    const result = await concludeNegotiation.execute({
+      propertyId: id,
+      userId: user.id
+    });
+
+    if (result.isLeft()) {
+      response.status(result.value.statusCode).json(result.value.message);
+      return;
+    }
+
+    response.status(200).json(result.value);
+    return;
+
   }
 
 }
