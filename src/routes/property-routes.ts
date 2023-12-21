@@ -14,7 +14,8 @@ router.post(
 
 router.get('/', PropertyController.getAllProperties);
 router.get('/myproperties/:id', verifyToken, PropertyController.getUserProperties);
-router.get('/:id', PropertyController.GetPropertyById);
 router.patch('/schedule/:id', verifyToken, PropertyController.Schedule);
+router.get('/mynegotiations', verifyToken, PropertyController.getMyNegotiations);
+router.get('/:id', PropertyController.GetPropertyById);
 
 export default router;
