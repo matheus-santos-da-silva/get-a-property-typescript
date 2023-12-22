@@ -22,7 +22,10 @@ export class EditUser {
     private repository: UsersRepository
   ) { }
 
-  async execute(id: string, props: EditUserRequest): Promise<Response> {
+  async execute(
+    paramId: string,
+    userId: string,
+    props: EditUserRequest): Promise<Response> {
 
     const {
       email,
@@ -31,7 +34,11 @@ export class EditUser {
       password
     } = props;
 
-    const userExists = await this.repository.findUserById(id);
+    if(userId !== paramId) {
+      return left(new RequiredParametersError('This account is not yours, please try again with your account', 400));
+    }
+
+    const userExists = await this.repository.findUserById(userId);
     if (!userExists) {
       return left(new RequiredParametersError('User not exists', 400));
     }
@@ -44,7 +51,7 @@ export class EditUser {
 
     const passwordHash = await encryptingPass(password);
 
-    await this.repository.editUser(id, {
+    await this.repository.editUser(paramId, {
       email,
       name,
       phone,

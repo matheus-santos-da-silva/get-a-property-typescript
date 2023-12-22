@@ -7,6 +7,9 @@ import { LoginUser, LoginUserRequest } from '../use-cases/users/login-user';
 import { GetUserById } from '../use-cases/users/get-user-by-id';
 import { GetAllUsers } from '../use-cases/users/get-all-users';
 import { EditUser, EditUserRequest } from '../use-cases/users/edit-user';
+import { getToken } from '../utils/get-token';
+import { left } from '../errors/either';
+import { RequiredParametersError } from '../errors/required-parameters-error';
 
 export class UserController {
 
@@ -91,12 +94,26 @@ export class UserController {
     const repository = new DbUserRepository();
     const editUser = new EditUser(repository);
 
-    const result = await editUser.execute(id, {
-      email,
-      name,
-      phone,
-      password
-    });
+    const token = getToken(request);
+    if (!token) {
+      return left(new RequiredParametersError('Token not found', 401));
+    }
+    
+    const userRepository = new DbUserRepository();
+    const user = await userRepository.getUserByToken(token);
+
+    if (!user) {
+      return left(new RequiredParametersError('User not found', 404));
+    }
+
+    const result = await editUser.execute(
+      id,
+      user.id ,{
+        email,
+        name,
+        phone,
+        password
+      });
 
     if (result.isLeft()) {
       response.status(result.value.statusCode).json(result.value.message);
