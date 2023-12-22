@@ -27,7 +27,7 @@ describe('Conclude Negotiations use case', () => {
       propertyId: mockProperty.id
     });
 
-    expect(result.value).toEqual('Negotiation Conclude successfully');
+    expect(result.value).toEqual('Negotiation completed successfully');
     expect(propertyRepository.items).toHaveLength(0);
   });
 
