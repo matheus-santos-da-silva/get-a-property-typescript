@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules ./src/index.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@prisma/client": "^5.5.2",
@@ -16,6 +17,7 @@
     "@types/multer": "^1.4.11",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
+    "@vitest/coverage-v8": "^1.1.0",
     "eslint": "^8.52.0",
     "prisma": "^5.5.2",
     "ts-node-dev": "^2.0.0",
