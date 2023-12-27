@@ -48,6 +48,11 @@ export class CreateProperty {
       }
     }
 
+    const checkIfAddressAlreadyExists = await this.repository.checkIfAddressAlreadyExists(address);
+    if(checkIfAddressAlreadyExists) {
+      return left(new RequiredParametersError('This address is already in use', 400));
+    }
+
     const newProperty = new Property({
       id,
       address,
