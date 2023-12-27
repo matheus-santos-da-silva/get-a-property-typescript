@@ -15,6 +15,7 @@ import { CreatePropertyValidation } from '../utils/create-property-validation';
 import { GetMyNegotiations } from '../use-cases/properties/get-my-negotiations';
 import { ConcludeNegotiation } from '../use-cases/properties/conclude-negotiation';
 import { EditProperty, EditPropertyRequest } from '../use-cases/properties/edit-property';
+import { DeleteProperty } from '../use-cases/properties/delete-property';
 
 export class PropertyController {
 
@@ -41,10 +42,7 @@ export class PropertyController {
     const usersRepository = new DbUserRepository();
     const createProperty = new CreateProperty(repository);
 
-    const token = getToken(request);
-    if (!token) {
-      return left(new RequiredParametersError('Invalid token', 401));
-    }
+    const token = getToken(request, response);
 
     const user = await usersRepository.getUserByToken(token);
     if (!user) {
@@ -129,10 +127,7 @@ export class PropertyController {
 
     const id = request.params.id;
 
-    const token = getToken(request);
-    if (!token) {
-      return left(new RequiredParametersError('Token not found', 400));
-    }
+    const token = getToken(request, response);
 
     const userRepository = new DbUserRepository();
 
@@ -159,10 +154,7 @@ export class PropertyController {
 
   static async getMyNegotiations(request: Request, response: Response) {
 
-    const token = getToken(request);
-    if (!token) {
-      return left(new RequiredParametersError('Token not found', 400));
-    }
+    const token = getToken(request, response);
 
     const userRepository = new DbUserRepository();
 
@@ -190,10 +182,7 @@ export class PropertyController {
 
     const id = request.params.id;
 
-    const token = getToken(request);
-    if (!token) {
-      return left(new RequiredParametersError('Token not found', 401));
-    }
+    const token = getToken(request, response);
     
     const propertyRepository = new DbPropertyRepository();
 
@@ -239,10 +228,7 @@ export class PropertyController {
     let images = request.files as Express.Multer.File[];
     if (!images) images = [];
 
-    const token = getToken(request);
-    if (!token) {
-      return left(new RequiredParametersError('Token not found', 401));
-    }
+    const token = getToken(request, response);
 
     const propertyRepository = new DbPropertyRepository();
 
@@ -274,6 +260,35 @@ export class PropertyController {
     response.status(200).json(result.value);
     return;
 
+  }
+
+  static async deleteProperty(request: Request, response: Response) {
+
+    const id = request.params.id;
+
+    const token = getToken(request, response);
+
+    const propertyRepository = new DbPropertyRepository();
+    const userRepository = new DbUserRepository();
+  
+    const user = await userRepository.getUserByToken(token);
+    if (!user) {
+      return left(new RequiredParametersError('User not found', 404));
+    }
+
+    const deleteProperty = new DeleteProperty(propertyRepository, userRepository);
+    const result = await deleteProperty.execute({
+      propertyId: id,
+      userId: user.id
+    });
+
+    if (result.isLeft()) {
+      response.status(result.value.statusCode).json(result.value.message);
+      return;
+    }
+
+    response.status(200).json(result.value);
+    return;
   }
 
 }

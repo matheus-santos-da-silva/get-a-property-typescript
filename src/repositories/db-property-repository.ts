@@ -117,4 +117,13 @@ export class DbPropertyRepository implements PropertiesRepository {
     );
 
   }
+  
+  async deleteProperty(id: string): Promise<void> {
+  
+    await prismaClient.property.delete({
+      where: { id }
+    });
+
+  }
+
 }

@@ -12,4 +12,5 @@ export interface PropertiesRepository {
   concludeNegotiation(propertyId: string): Promise<string>
   checkIfAddressAlreadyExists(address: string): Promise<PropertyProps | null>
   editProperty(id: string, props: EditPropertyRequest): Promise<void>
+  deleteProperty(id: string): Promise<void>
 }

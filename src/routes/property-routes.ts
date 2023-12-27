@@ -19,5 +19,6 @@ router.get('/mynegotiations', verifyToken, PropertyController.getMyNegotiations)
 router.get('/:id', PropertyController.GetPropertyById);
 router.delete('/conclude/:id', verifyToken, PropertyController.ConcludeNegotiation);
 router.patch('/edit/:id', verifyToken, imageUpload.array('images') ,PropertyController.editProperty);
+router.delete('/:id', verifyToken, PropertyController.deleteProperty);
 
 export default router;
