@@ -1,6 +1,7 @@
 import { PropertiesRepository } from '../properties-repository';
 import { Property } from '../../entities/property';
 import { PropertyProps, ScheduleRepositoryRequestProps } from '../../DTO/property-dtos';
+import { EditPropertyRequest } from '../../use-cases/properties/edit-property';
 
 export class InMemoryPropertiesRepository implements PropertiesRepository {
 
@@ -62,6 +63,24 @@ export class InMemoryPropertiesRepository implements PropertiesRepository {
     }
 
     return 'Negotiation completed successfully';
+  }
+
+  async checkIfAddressAlreadyExists(address: string) : Promise<PropertyProps | null> {
+
+    const property = this.items.find((item) => item.address === address);
+    if(!property) return null;
+
+    return property;
+  }
+
+  async editProperty(id: string, props: EditPropertyRequest): Promise<void> {
+  
+    for (const item of this.items) {
+      if (item.id === id) {
+        Object.assign(item, props);
+      }
+    }
+
   }
 
 }
