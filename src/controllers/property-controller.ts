@@ -14,6 +14,7 @@ import { DbContractorRepository } from '../repositories/db-contractor-repository
 import { CreatePropertyValidation } from '../utils/create-property-validation';
 import { GetMyNegotiations } from '../use-cases/properties/get-my-negotiations';
 import { ConcludeNegotiation } from '../use-cases/properties/conclude-negotiation';
+import { EditProperty, EditPropertyRequest } from '../use-cases/properties/edit-property';
 
 export class PropertyController {
 
@@ -208,6 +209,62 @@ export class PropertyController {
       propertyId: id,
       userId: user.id
     });
+
+    if (result.isLeft()) {
+      response.status(result.value.statusCode).json(result.value.message);
+      return;
+    }
+
+    response.status(200).json(result.value);
+    return;
+
+  }
+
+  static async editProperty(request: Request<{ id: string }, {}, EditPropertyRequest>, response: Response) {
+    const { 
+      address,
+      category,
+      description,
+      price,
+      title
+    } = request.body;
+
+    const validationRequest = CreatePropertyValidation(request);
+    if (!validationRequest.isValid) {
+      response.status(422).json({ message: validationRequest.message });
+      return;
+    }
+    const id = request.params.id;
+
+    let images = request.files as Express.Multer.File[];
+    if (!images) images = [];
+
+    const token = getToken(request);
+    if (!token) {
+      return left(new RequiredParametersError('Token not found', 401));
+    }
+
+    const propertyRepository = new DbPropertyRepository();
+
+    const userRepository = new DbUserRepository();
+    const user = await userRepository.getUserByToken(token);
+    if (!user) {
+      return left(new RequiredParametersError('User not found', 404));
+    }
+
+    const editProperty = new EditProperty(propertyRepository);
+    const result = await editProperty.execute(
+      id,
+      user.id,
+      {
+        address,
+        category,
+        description,
+        price,
+        title,
+        images
+      }
+    );
 
     if (result.isLeft()) {
       response.status(result.value.statusCode).json(result.value.message);

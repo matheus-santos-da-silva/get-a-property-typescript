@@ -1,6 +1,7 @@
 import { PropertyProps, ScheduleRepositoryRequestProps } from '../DTO/property-dtos';
 import { prismaClient } from '../database/prisma-client';
 import { Property } from '../entities/property';
+import { EditPropertyRequest } from '../use-cases/properties/edit-property';
 import { PropertiesRepository } from './properties-repository';
 
 export class DbPropertyRepository implements PropertiesRepository {
@@ -83,4 +84,37 @@ export class DbPropertyRepository implements PropertiesRepository {
     return 'Negotiation completed successfully';
   }
 
+  async checkIfAddressAlreadyExists(address: string): Promise<PropertyProps | null> {
+    const property = await prismaClient.property.findFirst({ where: { address } });
+    if(!property) return null;
+    
+    return property;
+  }
+
+  async editProperty(
+    id: string,
+    {
+      address,
+      category,
+      description,
+      images ,
+      price,
+      title
+    }: EditPropertyRequest): Promise<void> {
+    
+    await prismaClient.property.update(
+      {
+        where: { id },
+        data: {  
+          address,
+          category,
+          description,
+          price,
+          title,
+          images: images.map(images => images.filename)
+        } 
+      }
+    );
+
+  }
 }

@@ -18,5 +18,6 @@ router.patch('/schedule/:id', verifyToken, PropertyController.Schedule);
 router.get('/mynegotiations', verifyToken, PropertyController.getMyNegotiations);
 router.get('/:id', PropertyController.GetPropertyById);
 router.delete('/conclude/:id', verifyToken, PropertyController.ConcludeNegotiation);
+router.patch('/edit/:id', verifyToken, imageUpload.array('images') ,PropertyController.editProperty);
 
 export default router;
