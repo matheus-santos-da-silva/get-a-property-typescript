@@ -83,4 +83,12 @@ export class InMemoryPropertiesRepository implements PropertiesRepository {
 
   }
 
+  async deleteProperty(id: string): Promise<void> {
+
+    for (const item of this.items) {
+      const index = this.items.findIndex((item) => item.id === id);
+      this.items.splice(index, 1);
+    }
+
+  }
 }
