@@ -4,7 +4,7 @@ import { getToken } from '../utils/get-token';
 
 export const verifyToken = (request: Request, response: Response, next: NextFunction) => {
 
-  const token = getToken(request);
+  const token = getToken(request, response);
 
   if (!request.headers.authorization || !token) {
     response.status(401).json({ message: 'Access denied' });
