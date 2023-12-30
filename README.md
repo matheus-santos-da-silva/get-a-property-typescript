@@ -4,10 +4,10 @@
 
 
 ## Índice
-* [Pré requisitos](#📋-pré-requisitos)
-* [Instalação](#🔧-instalação)
-* [Testes](#⚙️-executando-os-testes)
-* [Tecnologias utilizadas](#🛠️-tecnologias-utilizadas)
+* [Pré requisitos](#-pré-requisitos)
+* [Instalação](#-instalação)
+* [Testes](#-executando-os-testes)
+* [Tecnologias utilizadas](#-tecnologias-utilizadas)
 
 
 ## Sobre
