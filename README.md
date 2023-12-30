@@ -1,99 +1,95 @@
-# Título do projeto
+# Get a Property 
 
-Um parágrafo da descrição do projeto vai aqui
+![Logo](./public/logo/logo.png)
 
-## 🚀 Começando
 
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
+## Índice
+* [Pré requisitos](#📋-pré-requisitos)
+* [Instalação](#🔧-instalação)
+* [Testes](#⚙️-executando-os-testes)
+* [Tecnologias utilizadas](#🛠️-tecnologias-utilizadas)
 
-Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar o projeto.
+
+## Sobre
+**Get a property** é um projeto de **portal de imóveis**, ideia que tive ao passar por um problema que era a dificuldade em achar imóveis para alugar/comprar na minha cidade, a partir disso comecei a criar esse projeto.
+
+----
 
 ### 📋 Pré-requisitos
 
-De que coisas você precisa para instalar o software e como instalá-lo?
+Primeiramente é necessário baixar o [Docker](https://docs.docker.com/) para o [Windows](https://docs.docker.com/desktop/install/windows-install/), ou para o [Linux](https://docs.docker.com/desktop/install/mac-install/) para conseguir rodar o [PostgreSQL](https://www.postgresql.org/docs/) através dele. 
+
+Precisaremos também do [NodeJS](https://nodejs.org/en/download) instalado na nossa máquina.
+
+Depois de baixar e instalar o Docker, vamos baixar a imagem do PostgreSQL 
 
 ```
-Dar exemplos
+ $ docker pull postgres
 ```
 
 ### 🔧 Instalação
 
-Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
+Siga as instruções para a instalação do projeto em sua máquina
 
-Diga como essa etapa será:
-
-```
-Dar exemplos
-```
-
-E repita:
+#### Clone este repositório
 
 ```
-Até finalizar
+$ git clone https://github.com/matheus-santos-da-silva/get-a-property-typescript
 ```
 
-Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
+#### Acesse a pasta do projeto em seu cmd e em seguida abra no seu Vscode
+
+```
+$ cd get-a-property-typescript
+
+$ code .
+```
+#### Em seu terminal instale todas as dependências
+```
+$ yarn install 
+
+ou
+
+$ npm install
+```
+#### Renomeie o arquivo **.env.example** para **.env**, e preencha todas as variáveis que estão lá: **PORT, DATABASE_URL e JWT_SECRET**
+ 
+```
+PORT= (Porta que o projeto vai rodar - Ex: 3333)
+
+DATABASE_URL= (url do seu banco de dados - Ex: postgresql://postgres:postgres@localhost:5432/get-a-property)
+
+JWT_SECRET= (Aqui uma 'Senha' para o jwt)
+```
+#### Inicie o Docker Compose 
+
+```
+$ docker-compose up -d 
+```
+
+#### Inicie a aplicação
+
+```
+$ yarn run dev  
+```
 
 ## ⚙️ Executando os testes
 
-Explicar como executar os testes automatizados para este sistema.
-
-### 🔩 Analise os testes de ponta a ponta
-
-Explique que eles verificam esses testes e porquê.
+Para executar os testes apenas rode esse código no terminal: 
 
 ```
-Dar exemplos
+$ yarn test
 ```
 
-### ⌨️ E testes de estilo de codificação
 
-Explique que eles verificam esses testes e porquê.
+## 🛠️ Tecnologias utilizadas
 
-```
-Dar exemplos
-```
-
-## 📦 Implantação
-
-Adicione notas adicionais sobre como implantar isso em um sistema ativo
-
-## 🛠️ Construído com
-
-Mencione as ferramentas que você usou para criar seu projeto
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - O framework web usado
-* [Maven](https://maven.apache.org/) - Gerente de Dependência
-* [ROME](https://rometools.github.io/rome/) - Usada para gerar RSS
-
-## 🖇️ Colaborando
-
-Por favor, leia o [COLABORACAO.md](https://gist.github.com/usuario/linkParaInfoSobreContribuicoes) para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de solicitação.
-
-## 📌 Versão
-
-Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto). 
-
-## ✒️ Autores
-
-Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início
-
-* **Um desenvolvedor** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
-* **Fulano De Tal** - *Documentação* - [fulanodetal](https://github.com/linkParaPerfil)
-
-Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
-
-## 📄 Licença
-
-Este projeto está sob a licença (sua licença) - veja o arquivo [LICENSE.md](https://github.com/usuario/projeto/licenca) para detalhes.
-
-## 🎁 Expressões de gratidão
-
-* Conte a outras pessoas sobre este projeto 📢;
-* Convide alguém da equipe para uma cerveja 🍺;
-* Um agradecimento publicamente 🫂;
-* etc.
-
+* [NodeJS](https://nodejs.org/docs/latest/api/) 
+* [Typescript](https://www.typescriptlang.org/docs/)
+* [Express.js](https://expressjs.com/pt-br/) - Framework
+* [Docker](https://docs.docker.com/) - Container
+* [PostgreSQL](https://www.postgresql.org/docs/) - Banco de dados
+* [Vitest](https://vitest.dev/) - Testes
 
 ---
-⌨️ com ❤️ por [Armstrong Lohãns](https://gist.github.com/lohhans) 😊
+⌨️ Feito por [Matheus Santos](https://github.com/matheus-santos-da-silva) 😊
