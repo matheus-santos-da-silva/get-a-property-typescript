@@ -17,7 +17,7 @@ export class GetPropertyById {
     const property = await this.respository.getPropertyById(id);
 
     if (!property) {
-      return left(new RequiredParametersError('Property not exists', 400));
+      return left(new RequiredParametersError('Property not found', 404));
     }
 
     return right(property);
