@@ -12,7 +12,9 @@ export interface ScheduleRequest {
   user: UserProps
 }
 
-type ScheduleResponse = string
+type ScheduleResponse = {
+  message: string
+}
 
 type Response = Either<RequiredParametersError, ScheduleResponse>
 
@@ -31,7 +33,7 @@ export class Schedule {
 
     const property = await propertyRepository.getPropertyById(propertyId);
     if (!property) {
-      return left(new RequiredParametersError('This property not exists', 400));
+      return left(new RequiredParametersError('Property not found', 404));
     }
 
     if (property.id_user === user.id) {
@@ -59,13 +61,13 @@ export class Schedule {
       }
 
       const result = await propertyRepository.schedule({ contractor: contractorExists, owner, propertyId });
-      return right(result);
+      return right({ message: result });
     }
 
     await contractorRepository.create(contractor, property);
 
     const result = await propertyRepository.schedule({ contractor, owner, propertyId });
-    return right(result);
+    return right({ message: result });
   }
 
 }

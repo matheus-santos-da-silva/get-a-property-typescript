@@ -29,7 +29,7 @@ describe('Schedule use case', () => {
       user: mockUser1
     });
 
-    expect(result.value).toEqual(`Visit scheduled succefully, contact ${mockUser.name} and call ${mockUser.phone}`);
+    expect(result.value).toEqual({ message: `Visit scheduled succefully, contact ${mockUser.name} and call ${mockUser.phone}` });
   });
 
   it('should not be able to schedule a visit if the property not exists', async () => {
@@ -49,7 +49,7 @@ describe('Schedule use case', () => {
     });
 
     expect(result.value).toBeInstanceOf(RequiredParametersError); 
-    expect(result.value).toContain({ _message: 'This property not exists'});
+    expect(result.value).toContain({ _message: 'Property not found'});
   });
 
   it('should not be able to schedule a visit to my own property', async () => {
