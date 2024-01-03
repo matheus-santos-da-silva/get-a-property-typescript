@@ -3,6 +3,7 @@ import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-
 import { LoginUser } from './login-user';
 import { CreateUser } from './create-user';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
+import { mockUser } from '../../mocks/mocks';
 
 vi.mock('bcrypt', () => ({
   compare: vi.fn().mockReturnValue(true)
@@ -16,17 +17,11 @@ describe('Login User', () => {
     const createUser = new CreateUser(repository);
     const sut = new LoginUser(repository);
 
-    await createUser.execute({
-      id: '111111',
-      email: 'test@test.com',
-      name: 'test',
-      password: '123456',
-      phone: '111111111'
-    });
+    await createUser.execute(mockUser);
 
     const result = await sut.execute({
-      email: 'test@test.com',
-      password: '123456'
+      email: mockUser.email,
+      password: mockUser.password
     });
 
     expect(result.value).contain({
