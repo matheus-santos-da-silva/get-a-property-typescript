@@ -14,13 +14,13 @@ describe('Create Property', () => {
     const createProperty = new CreateProperty(repository);
 
     const result = await createProperty.execute({
-      id: '11111',
-      address: 'test 123',
-      category: 'test',
-      description: 'test',
+      id: '1',
+      address: 'your-address',
+      category: 'apartamento',
+      description: 'your-description',
       images: [],
       price: new Decimal(123),
-      title: 'test',
+      title: 'apartment',
       user: { connect: { id: 'string' } }
     });
 
@@ -36,13 +36,13 @@ describe('Create Property', () => {
     await createProperty.execute(mockProperty);
 
     const result = await createProperty.execute({
-      id: '11111',
-      address: 'test 123',
-      category: 'test',
-      description: 'test',
+      id: '1',
+      address: mockProperty.address,
+      category: 'apartamento',
+      description: 'your-description',
       images: [],
       price: new Decimal(123),
-      title: 'test',
+      title: 'apartment',
       user: { connect: { id: 'string' } }
     });
 
