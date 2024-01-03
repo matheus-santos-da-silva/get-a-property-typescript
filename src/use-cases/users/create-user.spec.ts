@@ -11,9 +11,9 @@ describe('Create User', () => {
     const sut = new CreateUser(repository);
 
     const result = await sut.execute({
-      id: '111111',
-      email: 'test@test.com',
-      name: 'test',
+      id: '1',
+      email: 'johndoe@test.com',
+      name: 'John Doe',
       password: '123456',
       phone: '9999999'
     });
@@ -21,23 +21,23 @@ describe('Create User', () => {
     expect(result.value).toBeInstanceOf(User);
   });
 
-  it('should not be able create a new user if email passed already exists', async () => {
+  it('should not be able to create a new user if email passed already exists', async () => {
 
     const repository = new InMemoryUsersRepository();
     const sut = new CreateUser(repository);
 
     await sut.execute({
-      id: '111111',
-      email: 'test@test.com',
-      name: 'test',
+      id: '1',
+      email: 'johndoe@test.com',
+      name: 'John Doe',
       password: '2222222',
       phone: '88888888'
     });
 
     const result = await sut.execute({
-      id: '222222',
-      email: 'test@test.com',
-      name: 'test2',
+      id: '2',
+      email: 'johndoe@test.com',
+      name: 'Anyone',
       password: '33333333',
       phone: '9999999'
     });
