@@ -15,7 +15,6 @@ interface EditUserResponse {
 }
 
 type Response = Either<RequiredParametersError, EditUserResponse>
-
 export class EditUser {
 
   constructor(
@@ -25,22 +24,20 @@ export class EditUser {
   async execute(
     paramId: string,
     userId: string,
-    props: EditUserRequest): Promise<Response> {
-
-    const {
+    {
       email,
-      phone,
       name,
-      password
-    } = props;
+      password,
+      phone
+    }: EditUserRequest): Promise<Response> {
 
     if(userId !== paramId) {
-      return left(new RequiredParametersError('This account is not yours, please try again with your account', 400));
+      return left(new RequiredParametersError('This account is not yours, please try again with your account', 401));
     }
 
     const userExists = await this.repository.findUserById(userId);
     if (!userExists) {
-      return left(new RequiredParametersError('User not exists', 400));
+      return left(new RequiredParametersError('User not found', 404));
     }
 
     const emailAlreadyExists = await this.repository.findUserByEmail(email);

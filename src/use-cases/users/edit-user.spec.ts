@@ -41,7 +41,7 @@ describe('Edit User', () => {
     const result = await sut.execute('invalid-id', 'invalid-id', mockUser1);
 
     expect(result.value).toBeInstanceOf(RequiredParametersError);
-    expect(result.value).toContain({ _message: 'User not exists'});
+    expect(result.value).toContain({ _message: 'User not found'});
   });
 
   it('should not be able to edit user if email already exist', async () => {
@@ -55,7 +55,7 @@ describe('Edit User', () => {
     const result = await sut.execute(
       mockUser.id,
       mockUser.id, {
-        email: 'test2@test.com',
+        email: 'anyone@test.com',
         name: 'John Doe',
         phone: '2349234290',
         password: '123'
