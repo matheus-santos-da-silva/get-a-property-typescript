@@ -34,7 +34,7 @@ describe('GetUserProperties', () => {
     await createProperty.execute(mockProperty);
     const sut = new GetUserProperties(repository, userRepository);
 
-    const result = await sut.execute('22222222');
+    const result = await sut.execute('invalid-id');
 
     expect(result.value).toBeInstanceOf(RequiredParametersError);
   });
