@@ -31,7 +31,7 @@ export class LoginUser {
     const user = await this.repository.findUserByEmail(email);
 
     if (!user) {
-      return left(new RequiredParametersError('User not exists', 401));
+      return left(new RequiredParametersError('User not exists', 400));
     }
 
     const checkPassword = await compare(password, user.password);
