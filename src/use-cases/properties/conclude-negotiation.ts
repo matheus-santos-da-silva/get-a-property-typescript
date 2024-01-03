@@ -8,7 +8,9 @@ export interface ConcludeNegotiationRequest {
   userId: string
 }
 
-type ConcludeNegotiationResponse = string
+type ConcludeNegotiationResponse = {
+  message: string
+}
 type Response = Either<RequiredParametersError, ConcludeNegotiationResponse>
 
 export class ConcludeNegotiation {
@@ -38,7 +40,7 @@ export class ConcludeNegotiation {
     }
 
     const result = await this.propertyRepository.concludeNegotiation(propertyId);
-    return right(result);
+    return right({ message: result });
   }
     
 }

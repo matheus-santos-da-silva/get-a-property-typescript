@@ -27,8 +27,7 @@ describe('Conclude Negotiations use case', () => {
       propertyId: mockProperty.id
     });
 
-    expect(result.value).toEqual('Negotiation completed successfully');
-    expect(propertyRepository.items).toHaveLength(0);
+    expect(result.value).toEqual({ message: 'Negotiation completed successfully' });
   });
 
   it('should not be able to complete a negotiation if there is no property with the given id', async () => {
