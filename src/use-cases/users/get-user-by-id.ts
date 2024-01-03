@@ -1,9 +1,14 @@
-import { User } from '../../entities/user';
 import { Either, left, right } from '../../errors/either';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
 import { UsersRepository } from '../../repositories/users-repository';
 
-export type GetUserByIdResponse = Omit<User, 'password'>
+export type GetUserByIdResponse = {
+  id: string
+  name: string
+  email: string
+  phone: string
+}
+
 type Response = Either<RequiredParametersError, GetUserByIdResponse>
 
 export class GetUserById {
@@ -16,7 +21,7 @@ export class GetUserById {
 
     const user = await this.repository.findUserById(id);
     if (!user) {
-      return left(new RequiredParametersError('User not found', 400));
+      return left(new RequiredParametersError('User not found', 404));
     }
 
     return right(user);
