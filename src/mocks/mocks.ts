@@ -2,7 +2,7 @@ import { Decimal } from '@prisma/client/runtime/library';
 
 export const mockUser = {
   id: '1',
-  email: 'test@test.com',
+  email: 'johndoe@test.com',
   name: 'John Doe',
   password: '123456',
   phone: '111111111'
@@ -10,8 +10,8 @@ export const mockUser = {
 
 export const mockUser1 = {
   id: '2',
-  email: 'test2@test.com',
-  name: 'John Doe Doe',
+  email: 'anyone@test.com',
+  name: 'Anyone',
   password: '123456',
   phone: '33333333333'
 };
