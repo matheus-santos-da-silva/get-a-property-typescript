@@ -1,12 +1,12 @@
 import { Either, left, right } from '../../errors/either';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
 import { PropertiesRepository } from '../../repositories/properties-repository';
-import { Property } from '../../entities/property';
+import { Property, categoryEnum } from '../../entities/property';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export interface CreatePropertyRequest {
   id: string
-  category: string
+  category: categoryEnum
   title: string
   address: string
   price: Decimal
@@ -48,9 +48,14 @@ export class CreateProperty {
       }
     }
 
+
     const checkIfAddressAlreadyExists = await this.repository.checkIfAddressAlreadyExists(address);
     if(checkIfAddressAlreadyExists) {
       return left(new RequiredParametersError('This address is already in use', 400));
+    }
+
+    if(!(category in categoryEnum)) {
+      return left(new RequiredParametersError('That category is not valid', 400));
     }
 
     const newProperty = new Property({

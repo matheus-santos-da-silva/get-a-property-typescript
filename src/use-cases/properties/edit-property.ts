@@ -2,11 +2,12 @@ import { Decimal } from '@prisma/client/runtime/library';
 import { PropertiesRepository } from '../../repositories/properties-repository';
 import { Either, left, right } from '../../errors/either';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
+import { categoryEnum } from '../../entities/property';
 
 export interface EditPropertyRequest {
   title: string
   address: string
-  category: string
+  category: categoryEnum
   description: string
   price: Decimal
   images: Express.Multer.File[]
@@ -47,6 +48,10 @@ export class EditProperty {
     const addressAlreadyExists = await this.propertyRepository.checkIfAddressAlreadyExists(address);
     if(addressAlreadyExists) {
       return left(new RequiredParametersError('This address already exists, try again with another one', 400));
+    }
+
+    if(!(category in categoryEnum)) {
+      return left(new RequiredParametersError('That category is not valid', 400));
     }
 
     this.propertyRepository.editProperty(
