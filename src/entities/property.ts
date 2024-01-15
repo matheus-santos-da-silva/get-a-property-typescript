@@ -1,9 +1,17 @@
 import { Decimal } from '@prisma/client/runtime/library';
 import { Contractor } from './contractor';
 
+export enum categoryEnum {
+  'Apartamento',
+  'Casa',
+  'Kitnet',
+  'Terreno',
+  'Fazenda',
+  'Loja'
+}
 interface PropertyProps {
   id: string
-  category: string
+  category: categoryEnum
   title: string
   address: string
   price: Decimal
@@ -63,7 +71,7 @@ export class Property {
     return this.props.id_user;
   }
 
-  set category(value: string) {
+  set category(value: categoryEnum) {
     this.props.category = value;
   }
 
