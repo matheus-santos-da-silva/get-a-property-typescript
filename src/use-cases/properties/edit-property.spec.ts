@@ -7,13 +7,14 @@ import { CreateProperty } from './create-property';
 import { EditProperty } from './edit-property';
 import { Decimal } from '@prisma/client/runtime/library';
 import { RequiredParametersError } from '../../errors/required-parameters-error';
+import { categoryEnum } from '../../entities/property';
 
 const mockProperty = {
   id: '1',
   address: 'test 123',
-  category: 'test',
+  category: categoryEnum.Apartamento,
   description: 'test',
-  images: [],
+  images: [],  
   price: new Decimal(123),
   title: 'test',
   user: { connect: { id: mockUser.id } }
@@ -39,7 +40,7 @@ describe('Edit Property use case' , () => {
       mockUser.id,
       {
         address: 'edited',
-        category: 'edited',
+        category: categoryEnum.Casa,
         description: 'edited',
         images: [],
         price: new Decimal(2),
@@ -70,7 +71,7 @@ describe('Edit Property use case' , () => {
       mockUser1.id,
       {
         address: 'edited',
-        category: 'edited',
+        category: categoryEnum.Casa,
         description: 'edited',
         images: [],
         price: new Decimal(2),
@@ -98,7 +99,7 @@ describe('Edit Property use case' , () => {
       mockUser.id,
       {
         address: 'edited',
-        category: 'edited',
+        category: categoryEnum.Casa,
         description: 'edited',
         images: [],
         price: new Decimal(2),
@@ -130,7 +131,7 @@ describe('Edit Property use case' , () => {
       mockUser.id,
       {
         address: mockProperty1.address,
-        category: 'edited',
+        category: categoryEnum.Casa,
         description: 'edited',
         images: [],
         price: new Decimal(2),
@@ -143,4 +144,35 @@ describe('Edit Property use case' , () => {
 
   });
 
+  it('should not to be able to edit property if the category is not valid', async () => {
+    
+    const userRepository = new InMemoryUsersRepository();
+    const createUser = new CreateUser(userRepository);
+
+    await createUser.execute(mockUser);
+
+    const propertyRepository = new InMemoryPropertiesRepository();
+    const createProperty = new CreateProperty(propertyRepository);
+
+    await createProperty.execute(mockProperty);
+    await createProperty.execute(mockProperty1);
+
+    const sut = new EditProperty(propertyRepository);
+    const result = await sut.execute(
+      mockProperty.id,
+      mockUser.id,
+      {
+        address: 'edited',
+        category: 'invalid-category',
+        description: 'edited',
+        images: [],
+        price: new Decimal(2),
+        title: 'edited'
+      }
+    );
+
+    expect(result.value).toBeInstanceOf(RequiredParametersError);
+    expect(result.value).toContain({ _message: 'That category is not valid'});
+
+  });
 });

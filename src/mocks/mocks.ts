@@ -1,4 +1,5 @@
 import { Decimal } from '@prisma/client/runtime/library';
+import { categoryEnum } from '../entities/property';
 
 export const mockUser = {
   id: '1',
@@ -19,7 +20,7 @@ export const mockUser1 = {
 export const mockProperty = {
   id: '1',
   address: 'test 123',
-  category: 'test',
+  category: categoryEnum.Apartamento,
   description: 'test',
   images: [],
   price: new Decimal(123),
@@ -30,7 +31,7 @@ export const mockProperty = {
 export const mockProperty1 = {
   id: '2',
   address: 'test 1234',
-  category: 'test',
+  category: categoryEnum.Apartamento,
   description: 'test',
   images: [],
   price: new Decimal(123),
